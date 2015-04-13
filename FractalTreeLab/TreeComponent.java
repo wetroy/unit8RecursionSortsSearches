@@ -17,7 +17,7 @@ public class TreeComponent extends JPanel
     private final int PANEL_HEIGHT = 1000;
 
     private final int TOPX = 500, TOPY = 775;
-    private final int BOTTOMX = 500, BOTTOMY = 825;
+    //private final int BOTTOMX = 500, BOTTOMY = 825;
 
     private int current;
     private int angle = 5;
@@ -37,25 +37,26 @@ public class TreeComponent extends JPanel
         int deltaX, deltaY, x3, y3, x4, y4, length; 
 
         if (order == 1)
-            page.drawLine (x1, y1, x2, y2);
+            page.drawLine (x1, y1, x1, y1 + 50);
         else
         {
-            length = 50 - (order * 3);
+            length = prevLength - 3;
             //deltaY = (randomGenerator.nextInt(40) + 1 - (order * 3));
             //deltaX = (int)Math.sqrt((length * length)-(deltaY * deltaY));
             //deltaX = x1 - x2 - (order * 3);
             //deltaY = y1 - y2 - (order * 3);
-            
+            deltaY = length * (int)Math.cos(angles * order);
+            deltaX = length * (int)Math.sin(angles * order);
             x3 = x1 + deltaX;
-            y3 = y1 + deltaY;
+            y3 = y1 - deltaY;
 
             x4 = x1 - deltaX;
-            y4 = y1 + deltaY;
-            page.drawLine (x2, y2, x3, y3);
-            page.drawLine (x2, y2, x3, y3);
-            drawFractal (order-1, x2, y2, x2, y2, page);
-            drawFractal (order-1, x2, y2, x3, y3, page);
-            //drawFractal (order-1, x1, y1, x4, y4, page);
+            y4 = y1 - deltaY;
+            page.drawLine (x1, y1, x3, y3);
+            page.drawLine (x1, y1, x4, y4);
+            drawFractal (order-1, x1, y1, x4, y4, page);
+            drawFractal (order-1, x1, y1, x3, y3, page);
+            drawFractal (order-1, x1, y1, x1, y1 - 50, page);
         }
         
     }
@@ -94,7 +95,7 @@ public class TreeComponent extends JPanel
         }
 
 
-        drawFractal (current, TOPX, TOPY, BOTTOMX, angle, page);
+        drawFractal (current, TOPX, TOPY, 50, angle, page);
     }
 
     //-----------------------------------------------------------------
